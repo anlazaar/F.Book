@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ForumBook - {{.Post.Title}}</title>
+    <link rel="icon" href="/static/public/favicon.png" type="image/png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+    <div class="container">
+      <div class="post-detail-layout">
+        <div class="post-detail-main">
+          <div id="backgroundPost">
+            {{if .Post.Image}}
+            <div class="post-image-container">
+              <img src="{{.Post.Image}}" alt="Post image" class="post-image" />
+              <button class="expand-image-btn">Expand</button>
+            </div>
+            {{end}}
+            <div class="post-content">
+              <h1 class="post-title">{{.Post.Title}}</h1>
+              <p class="post-description">{{.Post.Content}}</p>
+              <div class="post-meta">
+                <img
+                  src="{{.User.Image}}"
+                  alt="Profile"
+                  title="{{.User.Name}}"
+                  class="post-profile-avatar"
+                  id="profile-avatar"
+                />
+                <span>Posted by {{.User.Name}}</span>
+                <div class="post-categories">
+                  {{range $index, $category := .Post.Categories}}
+                  <span class="category-tag">{{$category}}</span>
+                  {{end}}
+                </div>
+              </div>
+              <div class="post-actions">
+                <form action="/IsLike" method="post" class="action-form">
+                  <input type="hidden" name="postId" value="{{.Post.ID}}" />
+                  <input type="hidden" name="userId" value="{{.User.ID}}" />
+                  <input type="hidden" name="isLike" value="true" />
+                  <input type="hidden" name="isComment" value="false" />
+                  <button
+                    type="submit"
+                    class="action-btn like-btn"
+                    data-post-id="{{.Post.ID}}"
+                    id="like-button"
+                  >
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
+                      ></path>
+                    </svg>
+                    <span class="like-count">{{.Likes}}</span>
+                  </button>
+                </form>
+
+                <form action="/IsLike" method="post" class="action-form">
+                  <input type="hidden" name="postId" value="{{.Post.ID}}" />
+                  <input type="hidden" name="userId" value="{{.User.ID}}" />
+                  <input type="hidden" name="isLike" value="false" />
+                  <input type="hidden" name="isComment" value="false" />
+                  <button
+                    type="submit"
+                    class="action-btn dislike-btn"
+                    data-post-id="{{.Post.ID}}"
+                    id="dislike-button"
+                  >
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"
+                      ></path>
+                    </svg>
+                    <span class="dislike-count">{{.Dislikes}}</span>
+                  </button>
+                </form>
+
+                <button
+                  class="action-btn comment-btn"
+                  data-post-id="{{.Post.ID}}"
+                >
+                  💬 <span class="comment-count">{{len .Comments}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comments-sidebar">
+          <div class="comments-header">Comments ({{len .Comments}})</div>
+          <div class="comments-list">
+            {{range .Comments}}
+            <div class="comment">
+              <div class="comment-author">{{.UserName}}</div>
+              <div class="comment-content">{{.Content}}</div>
+              <div class="comment-actions">
+                <form action="/IsLike" method="post" class="action-form">
+                  <input type="hidden" name="postId" value="{{.PostId}}" />
+                  <input type="hidden" name="commentId" value="{{.ID}}" />
+                  <input type="hidden" name="userId" value="{{.UserId}}" />
+                  <input type="hidden" name="isLike" value="true" />
+                  <input type="hidden" name="isComment" value="true" />
+                  <button
+                    type="submit"
+                    class="action-btn like-btn"
+                    data-post-id="{{.ID}}"
+                    id="commentlike-button-{{.ID}}"
+                  >
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
+                      ></path>
+                    </svg>
+                    <span class="like-count">{{.CommentLikes}}</span>
+                  </button>
+                </form>
+
+                <form action="/IsLike" method="post" class="action-form">
+                  <input type="hidden" name="postId" value="{{.PostId}}" />
+                  <input type="hidden" name="commentId" value="{{.ID}}" />
+                  <input type="hidden" name="userId" value="{{.UserId}}" />
+                  <input type="hidden" name="isLike" value="false" />
+                  <input type="hidden" name="isComment" value="true" />
+                  <button
+                    type="submit"
+                    class="action-btn dislike-btn"
+                    data-post-id="{{.ID}}"
+                    id="commentdislike-button-{{.ID}}"
+                  >
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"
+                      ></path>
+                    </svg>
+                    <span class="dislike-count">{{.CommentDislikes}}</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+            {{end}}
+          </div>
+          <!-- Comment Form -->
+          <form action="/Comment" method="post" class="comment-form">
+            <input type="hidden" name="postId" value="{{.Post.ID}}" />
+            <input type="hidden" name="userId" value="{{.User.ID}}" />
+            <textarea
+              placeholder="Add a comment"
+              name="content"
+              class="comment-input"
+              maxlength="1200"
+            ></textarea>
+            <button type="submit" class="comment-submit">Comment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="fullscreen-image" class="fullscreen-image">
+      <img alt="Full size image" class="fullscreen-image-content" />
+      <button class="close-fullscreen-btn">&times;</button>
+    </div>
+    <script src="/static/utils/theme.js"></script>
+    <script type="module" src="/static/utils/liveParser.js"></script>
+    <script src="/static/utils/full-screen-iamge.js"></script>
+    <script type="application/json" id="isLiked">
+      {{.}}
+    </script>
+    <script src="/static/utils/post-page.js"></script>
+  </body>
+</html>
