@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 # F.Book
 =======
-# ForumBook
 
 ## Table of Contents
 - [Overview](#overview)
@@ -112,4 +110,3 @@ Through this project, you will gain knowledge in:
 ---
 
 This project serves as an excellent opportunity to apply and enhance your skills in full-stack Go web development!
->>>>>>> 5903dbf (Initial commit)
