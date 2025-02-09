@@ -33,7 +33,7 @@ func HandleStatic(w http.ResponseWriter, r *http.Request) {
 }
 
 func AllowedRoutes(path string) bool {
-    file, err := os.Open("../../client/static"+path)
+    file, err := os.Open("./client/static"+path)
     if err != nil {
         return false
     }
@@ -504,7 +504,7 @@ func HandleProfileUpdate(w http.ResponseWriter, r *http.Request) {
 
         if file != nil {
             defer file.Close()
-            copyFile, err := os.Create("../../client/static/Uploads/" + fileHeader.Filename)
+            copyFile, err := os.Create("./client/static/Uploads/" + fileHeader.Filename)
             if err != nil {
                 Cruds.ShowError(w, "err open file", http.StatusInternalServerError)
                 return
@@ -637,7 +637,7 @@ func HandleNewPost(w http.ResponseWriter, r *http.Request) {
         
         if file != nil {
             defer file.Close()
-            copyFile, err := os.Create("../../client/static/Uploads/" + fileHeader.Filename)
+            copyFile, err := os.Create("./client/static/Uploads/" + fileHeader.Filename)
             if err != nil {
                 Cruds.ShowError(w, "err open file", http.StatusInternalServerError)
                 return

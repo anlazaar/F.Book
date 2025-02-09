@@ -78,8 +78,8 @@ var (
 )
 
 const (
-	TemplatesPath = "../../client/templates/"
-	StaticPath    = "../../client/static/"
+	TemplatesPath = "./client/templates/"
+	StaticPath    = "./client/static/"
 	DefaultImage  = "/static/Uploads/no_image.png"
 	DefaultUserImage = "/static/Uploads/no_user_image.jpg"
 )
