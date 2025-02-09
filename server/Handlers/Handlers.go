@@ -3,10 +3,12 @@ package Handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -20,13 +22,14 @@ import (
 )
 
 func HandleStatic(w http.ResponseWriter, r *http.Request) {
+    r.URL.Path = r.URL.Path[7:]
     if !AllowedRoutes(r.URL.Path) {
         Cruds.ShowError(w, "404- Not Found", 404)
         return
     }
 
     fs := http.FileServer(http.Dir(GlobVar.StaticPath))
-	fs.ServeHTTP(w, r)
+    fs.ServeHTTP(w, r)
 }
 
 func AllowedRoutes(path string) bool {
@@ -45,9 +48,6 @@ func AllowedRoutes(path string) bool {
     return err == nil
 }
 
-func HandleUploads() {
-	http.Handle("/Uploads/", http.StripPrefix("/Uploads/", http.FileServer(http.Dir("../Uploads"))))
-}
 
 func HandlePostPage(w http.ResponseWriter, r *http.Request) {
     if r.URL.Path != "/post/" {
@@ -151,8 +151,8 @@ func HandleComment(w http.ResponseWriter, r *http.Request) {
 
     comment := FormValues["content"]
     postId := FormValues["postId"]
-    userId := FormValues["userId"]
-    if strings.TrimSpace(comment) == "" || len(comment) > 2000 {
+    userId := Utils.GetCurrentUserId(r)
+    if strings.TrimSpace(comment) == "" || len([]rune(comment)) > 2000 {
         http.Redirect(w, r, "/post/?id="+postId, http.StatusSeeOther)
         return 
     }
@@ -313,7 +313,8 @@ func HandleSignUp(w http.ResponseWriter, r *http.Request) {
         password := r.FormValue("password")
         passwordConfirmation := r.FormValue("passwordConfirmation")
 
-        image := GlobVar.DefaultUserImage
+        image := fmt.Sprintf("https://robohash.org/%s?size=200x200", url.QueryEscape(name))
+
         
         // Check email and name availability
         u1 := Cruds.GetUser(email)
@@ -503,7 +504,7 @@ func HandleProfileUpdate(w http.ResponseWriter, r *http.Request) {
 
         if file != nil {
             defer file.Close()
-            copyFile, err := os.Create("../Uploads/" + fileHeader.Filename)
+            copyFile, err := os.Create("../../client/static/Uploads/" + fileHeader.Filename)
             if err != nil {
                 Cruds.ShowError(w, "err open file", http.StatusInternalServerError)
                 return
@@ -522,7 +523,7 @@ func HandleProfileUpdate(w http.ResponseWriter, r *http.Request) {
                 Cruds.ShowError(w, "err copy file to newFile", http.StatusInternalServerError)
                 return
             }
-            imagePath = "/Uploads/" + fileHeader.Filename
+            imagePath = "/static/Uploads/" + fileHeader.Filename
         }
         // Check email and name availability
         u1 := Cruds.GetUser(email)
@@ -636,7 +637,7 @@ func HandleNewPost(w http.ResponseWriter, r *http.Request) {
         
         if file != nil {
             defer file.Close()
-            copyFile, err := os.Create("../Uploads/" + fileHeader.Filename)
+            copyFile, err := os.Create("../../client/static/Uploads/" + fileHeader.Filename)
             if err != nil {
                 Cruds.ShowError(w, "err open file", http.StatusInternalServerError)
                 return
@@ -649,11 +650,11 @@ func HandleNewPost(w http.ResponseWriter, r *http.Request) {
                 Cruds.ShowError(w, "err copy file to newFile", http.StatusInternalServerError)
                 return
             }
-            image = "/Uploads/"+fileHeader.Filename
+            image = "/static/Uploads/"+fileHeader.Filename
         }
         
 
-        isValidInputs := content != "" && len(categories) < 10 && len(content) < 1200
+        isValidInputs := content != "" && len(categories) < 10 && len([]rune(content)) <= 1200
         if isValidInputs && Cruds.InsertPost(data.ID, image, title, content, categories) {
             http.Redirect(w, r, "/", http.StatusSeeOther)
             return

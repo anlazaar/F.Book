@@ -243,6 +243,7 @@ func GetPostComments(postId, userID string) ([]GlobVar.Comment, error) {
 			comments.content,
 			comments.created_at, 
 			comments.updated_at,
+			users.user_image,
 			users.user_name AS UserName
 		FROM 
 			comments
@@ -269,6 +270,7 @@ func GetPostComments(postId, userID string) ([]GlobVar.Comment, error) {
 			&comment.Content,
 			&comment.CreatedAt,
 			&comment.UpdatedAt,
+			&comment.UserImage,
 			&comment.UserName,
 		)
 		if err != nil && err != sql.ErrNoRows {

@@ -2,7 +2,6 @@
 const theme = localStorage.getItem("theme") || "dark";
 document.documentElement.setAttribute("data-theme", theme);
 
-
 function initializeNavbar() {
   // Check authentication status and update navbar
   checkAuthStatus().then((isAuthenticated) => {
@@ -38,8 +37,8 @@ function updateAuthVisibility(isAuthenticated) {
       element.style.display = "none";
     });
   }
-  document.getElementById("navbar").style.display = ''
-  handlers()
+  document.getElementById("navbar").style.display = "";
+  handlers();
 }
 
 async function checkAuthStatus() {
@@ -56,7 +55,7 @@ async function checkAuthStatus() {
   }
 }
 
-// Load data on first load 
+// Load data on first load
 document.addEventListener("DOMContentLoaded", () => {
   // Load navbar
   fetch("/static/components/navbar.html")
@@ -64,19 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((html) => {
       document.getElementById("navbar-placeholder").innerHTML = html;
       initializeNavbar();
-  });
+    });
 });
 
 const handlers = () => {
   const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
   const navLinks = document.querySelector(".nav-links");
+  const themeToggle = document.querySelector(".theme-toggle");
+  const navItems = document.querySelectorAll(".nav-links a");
 
   // Toggle mobile menu
   mobileMenuBtn?.addEventListener("click", () => {
     navLinks.classList.toggle("mobile-visible");
   });
-
-  const themeToggle = document.querySelector(".theme-toggle");
 
   // Toggle theme
   themeToggle?.addEventListener("click", () => {
@@ -86,6 +85,26 @@ const handlers = () => {
     localStorage.setItem("theme", newTheme);
     themeToggle.textContent = newTheme === "dark" ? "🌙" : "🔆";
   });
-}
 
-handlers()
+  // Handle active link
+  navItems.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      navItems.forEach((nav) => nav.classList.remove("active"));
+
+      link.classList.add("active");
+
+      localStorage.setItem("activeLink", link.getAttribute("href"));
+    });
+  });
+
+  const savedActiveLink = localStorage.getItem("activeLink");
+  if (savedActiveLink) {
+    navItems.forEach((link) => {
+      if (link.getAttribute("href") === savedActiveLink) {
+        link.classList.add("active");
+      }
+    });
+  }
+};
+
+handlers();

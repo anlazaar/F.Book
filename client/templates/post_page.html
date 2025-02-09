@@ -19,7 +19,11 @@
           <div id="backgroundPost">
             {{if .Post.Image}}
             <div class="post-image-container">
-              <img src="{{.Post.Image}}" alt="Post image" class="post-image" />
+              <img
+                src="{{.Post.Image}}"
+                alt="Post image"
+                class="post-image"
+              />
               <button class="expand-image-btn">Expand</button>
             </div>
             {{end}}
@@ -98,7 +102,16 @@
           <div class="comments-list">
             {{range .Comments}}
             <div class="comment">
-              <div class="comment-author">{{.UserName}}</div>
+              <div class="comment-author">
+                <img
+                  src="{{.UserImage}}"
+                  alt="Profile"
+                  title="{{.UserName}}"
+                  class="comment-profile-avatar"
+                  id="profile-avatar"
+                />
+                <span class="username">{{.UserName}}</span>
+              </div>
               <div class="comment-content">{{.Content}}</div>
               <div class="comment-actions">
                 <form action="/IsLike" method="post" class="action-form">
@@ -149,7 +162,6 @@
           <!-- Comment Form -->
           <form action="/Comment" method="post" class="comment-form">
             <input type="hidden" name="postId" value="{{.Post.ID}}" />
-            <input type="hidden" name="userId" value="{{.User.ID}}" />
             <textarea
               placeholder="Add a comment"
               name="content"

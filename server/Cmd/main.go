@@ -25,10 +25,9 @@ func init() {
 
 func main() {
 	defer GlobVar.DB.Close()
-	Handlers.HandleUploads()
 
 	// Public routes
-	http.Handle("/static/", http.StripPrefix("/static", http.HandlerFunc(Handlers.HandleStatic))) // needs error page
+	http.HandleFunc("/static/" , Handlers.HandleStatic)// needs error page
 	http.HandleFunc("/", middleware.RateLimiter(Handlers.HandleIndex))
 	http.HandleFunc("/post/", middleware.RateLimiter(Handlers.HandlePostPage))
 	http.HandleFunc("/Sign_In", middleware.RateLimiter(Handlers.HandleSignIn))

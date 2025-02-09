@@ -180,10 +180,9 @@ if (postsData) {
       const date = new Date(post.created_at);
       const minDate = new Date(creatingDateFilterValue.min);
       const maxDate = new Date(creatingDateFilterValue.max);
-      const isTragetedByCreationDate = minDate <= date && date <= maxDate;
+      const isTargetedByCreationDate = minDate <= date && date <= maxDate;
 
-      const postRatio =
-        postsData[index].nbr_like - postsData[index].nbr_dislike;
+      const postRatio = post.nbr_like - post.nbr_dislike;
       const isTargetedByLikesRatio =
         likesFilterValue.min <= postRatio && postRatio <= likesFilterValue.max;
 
@@ -191,22 +190,22 @@ if (postsData) {
         Object.keys(selectedCategories).length === 0 ||
         post.category.some((cat) => selectedCategories[cat]);
 
-      const isTargetedByLikedButton =
-        !IsLikedButtonActive || post.is_user_liked;
-      const isTargetedByMeButton = !IsMeButtonActive || post.is_user_owned;
+      // to let both of the liked and owned post work together 
+      const isTargetedByLikedOrMeButton =
+        (!IsLikedButtonActive && !IsMeButtonActive) ||
+        (IsLikedButtonActive && post.is_user_liked) ||
+        (IsMeButtonActive && post.is_user_owned);
+
       if (
         isTargetedBySearch &&
-        isTragetedByCreationDate &&
+        isTargetedByCreationDate &&
         isTargetedByLikesRatio &&
         isTargetedByCategories &&
-        isTargetedByLikedButton &&
-        isTargetedByMeButton
+        isTargetedByLikedOrMeButton
       ) {
-        const item = postsDivs[index];
-        item.style.display = "block";
+        postsDivs[index].style.display = "block";
       } else {
-        const item = postsDivs[index];
-        item.style.display = "none";
+        postsDivs[index].style.display = "none";
       }
     });
   }
@@ -222,18 +221,18 @@ if (postsData) {
   // Liked posts filter
   document
     .getElementById("likeFilterButton")
-    .addEventListener("click", (event) => {
-      IsLikedButtonActive = !IsLikedButtonActive;
-      toggleButtonStyle(event.target, IsLikedButtonActive);
+    .addEventListener("click", function () {
+      IsLikedButtonActive = !IsLikedButtonActive; 
+      toggleButtonStyle(this, IsLikedButtonActive);
       showResults();
     });
 
-  // Owned Post filter
+  // Owned posts filter
   document
     .getElementById("meFilterButton")
-    .addEventListener("click", (event) => {
-      IsMeButtonActive = !IsMeButtonActive;
-      toggleButtonStyle(event.target, IsMeButtonActive);
+    .addEventListener("click", function () {
+      IsMeButtonActive = !IsMeButtonActive; 
+      toggleButtonStyle(this, IsMeButtonActive);
       showResults();
     });
 

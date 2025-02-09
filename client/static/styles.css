@@ -752,7 +752,7 @@ body {
 }
 
 .comment-content {
-  margin-bottom: 12px; /* Add space between content and actions */
+  margin: 12px; /* Add space between content and actions */
 }
 
 .comment-actions {
@@ -1390,6 +1390,25 @@ input[type="file"] {
   border: 2px solid var(--primary);
 }
 
+.comment-profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.username {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 /* Filter action buttons */
 .filter-action-btn {
   background-color: var(--surface);
@@ -1440,6 +1459,12 @@ input[type="file"] {
   .container {
     margin-top: 74px;
     padding: 1rem;
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   .post-detail-layout {

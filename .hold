@@ -13,12 +13,65 @@
 }
 
 .comment {
-    background-color: var(--surface-light);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    word-wrap: break-word; /* Ensures long words break */
-    overflow-wrap: break-word; /* Ensures text wraps inside the container */
-    white-space: normal; /* Ensures text wraps to the next line */
+  background-color: var(--surface-light);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  word-wrap: break-word; /* Ensures long words break */
+  overflow-wrap: break-word; /* Ensures text wraps inside the container */
+  white-space: normal; /* Ensures text wraps to the next line */
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(18, 18, 18, 0.95);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.error-message {
+  color: #ff4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
-  
+}

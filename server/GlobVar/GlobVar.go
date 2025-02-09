@@ -43,6 +43,7 @@ type Comment struct {
 	CreatedAt time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 	UserName string		`db:"UserName" json:"UserName"`
+	UserImage string     `db:"UserImage" json:"UserImage"`
 	CommentLikes    int `json:"nbr_like"`
 	CommentDislikes int `json:"nbr_dislike"`
 	IsUserLiked bool `json:"is_user_liked"`
@@ -79,6 +80,6 @@ var (
 const (
 	TemplatesPath = "../../client/templates/"
 	StaticPath    = "../../client/static/"
-	DefaultImage  = "/static/public/no_image.png"
-	DefaultUserImage = "/static/public/no_user_image.jpg"
+	DefaultImage  = "/static/Uploads/no_image.png"
+	DefaultUserImage = "/static/Uploads/no_user_image.jpg"
 )
