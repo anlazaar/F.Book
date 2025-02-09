@@ -218,7 +218,7 @@ func HandleLikeDislike(w http.ResponseWriter, r *http.Request) {
 
 		// Redirect the user back to the previous page
 		referer := r.Referer()
-		if referer == "http://localhost:8080/" {
+		if referer == "https://fbook-production.up.railway.app/" {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
             return
 		} else {
