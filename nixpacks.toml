@@ -2,7 +2,7 @@
 nixpkgs = ["go"]
 
 [phases.build]
-cmds = ["cd server && go build -o app ./Cmd"]
+cmds = ["cd server && go build -o app ./Cmd/main.go"]
 
 [start]
 cmd = "./server/app"
