@@ -5,10 +5,10 @@ import (
 	"log"
 	"net/http"
 
-	"forum/GlobVar"
-	"forum/Handlers"
-	middleware "forum/Middleware"
-	"forum/Migrations"
+	"forum/server/GlobVar"
+	"forum/server/Handlers"
+	middleware "forum/server/Middleware"
+	"forum/server/Migrations"
 
 	_ "modernc.org/sqlite"
 )

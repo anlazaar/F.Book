@@ -10,7 +10,7 @@ import (
 	"text/template"
 	"time"
 
-	"forum/GlobVar"
+	"forum/server/GlobVar"
 
 	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"

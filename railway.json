@@ -1,0 +1,8 @@
+{
+  "build": {
+    "cmd": "cd server && go build -o app ./Cmd"
+  },
+  "deploy": {
+    "cmd": "./server/app"
+  }
+}

@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"forum/GlobVar"
+	"forum/server/GlobVar"
 )
 
 func Migrate() {

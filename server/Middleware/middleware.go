@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	Cruds "forum/Api"
+	Cruds "forum/server/Api"
 	"net/http"
 )
 

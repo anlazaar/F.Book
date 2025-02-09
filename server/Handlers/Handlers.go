@@ -15,10 +15,10 @@ import (
 	"strings"
 	"time"
 
-	Cruds "forum/Api"
-	"forum/GlobVar"
-	"forum/Utils"
-	cookies "forum/cookies"
+	Cruds "forum/server/Api"
+	"forum/server/GlobVar"
+	"forum/server/Utils"
+	cookies "forum/server/cookies"
 )
 
 func HandleStatic(w http.ResponseWriter, r *http.Request) {

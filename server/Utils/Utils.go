@@ -1,7 +1,7 @@
 package Utils
 
 import (
-	Cruds "forum/Api"
+	Cruds "forum/server/Api"
 	"net/http"
 )
 
