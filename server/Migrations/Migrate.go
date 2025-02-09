@@ -10,7 +10,7 @@ func Migrate() {
 	// Get the file path from an environment variable (fallback to default path)
 	filePath := os.Getenv("MODULES_SQL_PATH")
 	if filePath == "" {
-		filePath = "./server/Database/modules.sql" // Default path if environment variable is not set
+		filePath = "./Database/modules.sql" // Default path if environment variable is not set
 	}
 
 	query, err := os.ReadFile(filePath)
