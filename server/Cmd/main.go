@@ -15,7 +15,7 @@ import (
 
 func init() {
 	var err error
-	GlobVar.DB, err = sql.Open("sqlite", "../Database/database.db")
+	GlobVar.DB, err = sql.Open("sqlite", "./server/Database/database.db")
 	if err != nil {
 		log.Fatal(err)
 	}
