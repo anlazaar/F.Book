@@ -35,6 +35,10 @@ func main() {
 	http.HandleFunc("/api/auth/status", Handlers.HandleAuthStatus)
 	http.HandleFunc("/api/checkEmail", Handlers.HandleIdentifierDisponibility)
 	http.HandleFunc("/api/isValidAuth", Handlers.HandleIsValidCredentials)
+
+	// For SSL Cerificate verification
+	http.Handle("/.well-known/", http.StripPrefix("/.well-known", http.FileServer(http.Dir("./.well-known"))))
+
 	
 
 	// Protected routes
