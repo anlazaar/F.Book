@@ -37,7 +37,7 @@ func main() {
 	http.HandleFunc("/api/isValidAuth", Handlers.HandleIsValidCredentials)
 
 	// For SSL Cerificate verification
-	http.Handle("/.well-known/", http.StripPrefix("/.well-known", http.FileServer(http.Dir("./.well-known"))))
+	// http.Handle("/.well-known/", http.StripPrefix("/.well-known", http.FileServer(http.Dir("./.well-known"))))
 
 	
 
